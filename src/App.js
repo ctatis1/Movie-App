@@ -1,25 +1,28 @@
-import './App.css';
-import {useState, useEffect} from 'react';
+import React from "react";
+import { useEffect } from "react";
 
-const App =() => {
-  //concepto de array destructuring
-  //'use' hace referencia a los Hooks
-  const [counter, setCounter] = useState(0);
+//API key: cb4d33e7
 
-  //este hook hace efecto apenas se actualice la página
-  //SOLO MODIFICAR LA VAR CON EL MÉTODO SET
-  // [] es el dependency array con esta hace que el hook solo se ejecute una vez al inicio del render 
-  useEffect(()=>{
-    alert('Contador en '+ counter);
-  }, [counter]);
+const API_URL = 'http://www.omdbapi.com?apikey=cb4d33e7';
 
-  return (
-    <div className="App">
-      <button onClick={()=> setCounter(prevCount=> prevCount -1)}>-</button>
-      <h1>{counter}</h1>
-      <button onClick={()=> setCounter(prevCount=> prevCount +1)}>+</button>
-    </div>
-  );
+const App = () => {
+    //se quiere buscar title dentro de searchMovies
+    const searchMovies = async (title) =>{
+        //hará el llamado a la API
+        //en fetch se usa un template string que hará la comparación entre todos los datos de la API y title
+        const response = await fetch(`${API_URL}&s=${title}`);
+        const data = await response.json();  
+        //data devuelve varios objetos pero solo se necesita Search
+        console.log(data.Search) 
+    }
+    //cargar los datos de la API solo una vez cuando cargue la página
+    useEffect(()=>{
+        searchMovies('Batman');
+    }, []);
+
+    return(
+        <h1>App</h1>
+    );
 }
 
 export default App;
