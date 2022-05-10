@@ -7,18 +7,13 @@ import './App.css';
 
 const API_URL = 'http://www.omdbapi.com?apikey=cb4d33e7';
 
-//movie de prueba
-const movie1 = {
-    "Title": "The Batman",
-    "Year": "2022",
-    "imdbID": "tt1877830",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BMDdmMTBiNTYtMDIzNi00NGVlLWIzMDYtZTk3MTQ3NGQxZGEwXkEyXkFqcGdeQXVyMzMwOTU5MDk@._V1_SX300.jpg"
-};
 
 const App = () => {
-
+    
+    /* A state variable. It is a variable that is used to store data that can change. */
     const [movies, setMovies] = useState([]);
+    //al inicio la búsqueda está vacía
+    const [searchTermn, setSearchTerm] = useState("");
     //cargar los datos de la API solo una vez cuando cargue la página
     useEffect(()=>{
         searchMovies('Batman');
@@ -44,14 +39,16 @@ const App = () => {
                 <input 
                     placeholder="Search for movies"
                     //solo aparece Superman y no deja modificarlo pa eso está el onChange
-                    value='Superman'
-                    onChange={()=>{}}
+                    value={searchTermn}
+                    //'e' es un evento
+                    onChange={(e)=>setSearchTerm(e.target.value)}
                 />
                 <img 
                     src={SearchIcon}
                     alt='Search'
                     //el icono funciona también como botón por eso se debe coloca un onClick
-                    onClick={() => {}}
+                    //pa que funcione el onChange tiene que funcionar el onClick
+                    onClick={() => searchMovies(searchTermn)}
                 />
             </div>
 
